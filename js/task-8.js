@@ -13,7 +13,7 @@ const refs = {
 refs.list.addEventListener('click', onImgClickModalOpen);
 refs.btn.addEventListener('click', btnModalClose);
 refs.overley.addEventListener('click', onBackdropClickCloseModal);
-window.addEventListener('keydown', onEscCloseModal);
+window.addEventListener('keydown', selectButtonActions);
 
 //разметка галереи
 const listGalery = createListGaleryItems(imgGalery);
@@ -62,9 +62,43 @@ function onBackdropClickCloseModal(evt) {
   }
 }
 
-function onEscCloseModal(evt) {
-  //console.log(evt.code);
+function selectButtonActions(evt) {
+  console.log(evt.code);
   if (evt.code === 'Escape') {
     btnModalClose();
+  } else if (evt.code === 'ArrowRight') {
+    onArrowRight();
+  } else if (evt.code === 'ArrowLeft') {
+    onArrowLeft();
   }
+}
+
+const bigImg = imgGalery.map(({ original }) => original);
+
+let index = 0;
+
+setActiveImage(index);
+
+function onArrowRight() {
+  console.log(bigImg.length);
+  if (index + 1 >= bigImg.length) {
+    return;
+  }
+
+  console.log((index += 1));
+  setActiveImage(index);
+}
+
+function onArrowLeft() {
+  if (index - 1 < 0) {
+    return;
+  }
+
+  console.log((index -= 1));
+  setActiveImage(index);
+}
+
+function setActiveImage(indexCurrent) {
+  const activeImage = bigImg[indexCurrent];
+  refs.img.src = activeImage;
 }
