@@ -11,9 +11,10 @@ const refs = {
 
 //слушатели
 refs.list.addEventListener('click', onImgClickModalOpen);
+refs.list.addEventListener('keydown', selectButtonActions);
 refs.btn.addEventListener('click', btnModalClose);
 refs.overley.addEventListener('click', onBackdropClickCloseModal);
-window.addEventListener('keydown', selectButtonActions);
+
 
 //разметка галереи
 const listGalery = createListGaleryItems(imgGalery);
@@ -23,8 +24,8 @@ function createListGaleryItems(items) {
   return items
     .map(
       ({ original, description, preview }) => `<li class="gallery__item">
-            <a href="${original}"  class="gallery__link">
-        <img class ="lightbox__image" src="${preview}" alt="${description}">
+            <a class="gallery__link" href="${original}">
+        <img class ="gallery__image" src="${preview}" alt="${description}" data-source="${original}">
             </a>
         </li>`,
     )
@@ -40,7 +41,7 @@ function onImgClickModalOpen(evt) {
   }
 
   refs.backdrop.classList.add('is-open');
-  refs.img.src = evt.target.src;
+  refs.img.src = evt.target.dataset.source;
   refs.img.alt = evt.target.alt;
 }
 
