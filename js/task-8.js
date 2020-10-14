@@ -11,7 +11,6 @@ const refs = {
 
 //слушатели
 refs.list.addEventListener('click', onImgClickModalOpen);
-refs.list.addEventListener('keydown', selectButtonActions);
 refs.btn.addEventListener('click', btnModalClose);
 refs.overley.addEventListener('click', onBackdropClickCloseModal);
 
@@ -35,7 +34,7 @@ function createListGaleryItems(items) {
 //Делегирование
 function onImgClickModalOpen(evt) {
   evt.preventDefault();
-
+  refs.list.addEventListener('keydown', selectButtonActions);
   if (evt.target.nodeName !== 'IMG') {
     return;
   }
@@ -48,6 +47,7 @@ function onImgClickModalOpen(evt) {
 //закрыть модалку
 
 function btnModalClose() {
+  refs.list.removeEventListener('keydown', selectButtonActions);
   refs.backdrop.classList.remove('is-open');
   refs.img.src = '';
 }
